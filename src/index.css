@@ -1,13 +1,88 @@
-body {
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*//navbar */
+.navbar {
+  font-family: sans-serif ;
+  font-size: 17px;
+  line-height: 26px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 6px -6px gray;
+  --webkit-box-shadow: 0 8px 6px -6px gray;
+  border-bottom: solid gray;
+}
+
+.active {
+  border-bottom: 1px solid white;
+}
+.nav-item.dropdown.active{
+  border-bottom: none; 
+}
+
+.navbar-brand {
+  text-transform: none;
+  border-bottom: 1px solid white;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+}
+.grid-icon {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* //footer */
+
+.footer{
+  background-color: dark;
+  text-align: center;
+  text-decoration: white;
+}
+
+/*// login register //*/
+
+.register{
+  
+  height: 70vh;
+  flex-direction: column;
+}
+
+.login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  flex-direction: column;
+}
+
+
+/*// dashboard //*/
+.dashboard{
+  display:grid ;
+  align-items: center;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.list-group-item {
+  align-items: center;
+  justify-content: center;
+  color: dark;
+}
+.list-group-item:active {
+  background-color: dark; 
+  color: dark; 
+}
+
+.form{
+  
+  align-items: center;
+  justify-content: center;
+  
 }
