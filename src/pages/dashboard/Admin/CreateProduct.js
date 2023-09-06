@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { useAuth } from '../../../context/auth';
+// import { useAuth } from '../../../context/auth';
 
 const NewProduct = () => {
   const [userData, setUserData] = useState({
@@ -12,16 +12,14 @@ const NewProduct = () => {
     price: '',
     description: '',
   });
-  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [imageFile, setImageFile] = useState(null);
 
-  const auth = useAuth()
+  // const auth = useAuth()
 
-  console.log(auth);
-  console.log('auth');
   useEffect(() => {
     const storedData = localStorage.getItem('auth');
     if (storedData) {
@@ -37,10 +35,12 @@ const NewProduct = () => {
     axios
       .get('http://localhost:8000/api/categories')
       .then((response) => {
-        setCategories(response.data);
+        setCategory(response.data);
+        // console.log(response.data);
+        // console.log('response.data');
       })
       .catch((error) => {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching category:', error);
       });
 
     
@@ -63,8 +63,12 @@ const NewProduct = () => {
   };
 
   const handleCategoryChange = (e) => {
+    
     setSelectedCategory(e.target.value);
+   
   };
+  
+  
 
   const handleTagSelection = (tagId) => {
     if (selectedTags.includes(tagId)) {
@@ -87,7 +91,7 @@ const NewProduct = () => {
       data.append('price', formData.price);
       data.append('description', formData.description);
       data.append('category', selectedCategory);
-      data.append('tags', JSON.stringify(selectedTags));
+      data.append('tags', selectedTags);
       data.append('image', imageFile);
 
       const response = await axios.post('http://localhost:8000/api/products',data,
@@ -144,23 +148,27 @@ const NewProduct = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="category">
-              <Form.Label>Category</Form.Label>
+            <Form.Group controlId="Category">
+              <Form.Label>Kategori</Form.Label>
               <Form.Control
                 as="select"
-                name="category"
+                name="Category"
                 value={selectedCategory}
                 onChange={handleCategoryChange}
               >
-                <option value="">Select a category...</option>
-                {categories.map((category) => (
-                  <option key={category._id} value={category._id}>
-                    {category.name}
-                  </option>
-                ))}
-              </Form.Control>
+                
+                 <option value="">Pilih Kategori...</option>
+                  {category.map((category) => (
+                 <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+               ))}
+                  
+            </Form.Control>
             </Form.Group>
+       
 
+              
             <Form.Group controlId="tags">
               <Form.Label>Tags</Form.Label>
               {tags.map((tag) => (
