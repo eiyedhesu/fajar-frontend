@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, Form, Button } from 'react-bootstrap';
+import { Row, Card, Form, Button,Col,Tab } from 'react-bootstrap';
 import axios from 'axios';
-// import { useAuth } from '../../../context/auth';
+import AdminMenu from '../../../components/AdminMenu';
+import Layout from '../../../components/Layout';
+import { useAuth } from '../../../context/auth';
 
-const NewProduct = () => {
+
+const CreateProduct = () => {
+  const [auth] = useAuth ()
   const [userData, setUserData] = useState({
     token:''
   })
@@ -13,12 +17,12 @@ const NewProduct = () => {
     description: '',
   });
   const [category, setCategory] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [imageFile, setImageFile] = useState(null);
 
-  // const auth = useAuth()
+  
 
   useEffect(() => {
     const storedData = localStorage.getItem('auth');
@@ -36,8 +40,6 @@ const NewProduct = () => {
       .get('http://localhost:8000/api/categories')
       .then((response) => {
         setCategory(response.data);
-        // console.log(response.data);
-        // console.log('response.data');
       })
       .catch((error) => {
         console.error('Error fetching category:', error);
@@ -63,9 +65,7 @@ const NewProduct = () => {
   };
 
   const handleCategoryChange = (e) => {
-    
     setSelectedCategory(e.target.value);
-   
   };
   
   
@@ -97,7 +97,7 @@ const NewProduct = () => {
       const response = await axios.post('http://localhost:8000/api/products',data,
         {
           headers: {
-            'Authorization': `Bearer ${userData.token}`,
+            'Authorization': `Bearer ${userData?.token}`,
             'Content-Type': 'multipart/form-data'
           },
         }
@@ -110,8 +110,16 @@ const NewProduct = () => {
   };
 
   return (
-    <Container>
-      <Card>
+    <Layout>
+      <div className='container-fluid m-3 p-3'>
+      <Tab.Container id="list-group-tabs" defaultActiveKey="#link1">
+        <h1> Welcome {auth?.user?.full_name} </h1>
+      <Row>
+        <Col sm={3}>
+          <AdminMenu />
+        </Col>
+        <Col sm={9}>
+        <Card>
         <Card.Header as="h1">Tambah Produk</Card.Header>
         <Card.Body>
           <Form onSubmit={saveProduct}>
@@ -198,8 +206,15 @@ const NewProduct = () => {
           </Form>
         </Card.Body>
       </Card>
-    </Container>
+        </Col>
+      </Row>
+    </Tab.Container>
+    </div>
+    </Layout>
+      
+      
+    
   );
 };
 
-export default NewProduct;
+export default CreateProduct;

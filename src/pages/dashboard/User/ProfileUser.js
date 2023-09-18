@@ -26,7 +26,6 @@ const ProfileUser = () => {
     
   return (
     <div>
-      <h1>User Profile</h1>
       <ListGroup>
       <ListGroup.Item>Nama : {userData.full_name} </ListGroup.Item>
       <ListGroup.Item>Email : {userData.email} </ListGroup.Item>

@@ -35,6 +35,23 @@
   grid-row: 1;
 }
 
+.icon-cart{
+ color: white;
+ font-size: 30px;
+}
+
+.container-konfirmasi{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  
+}
+
+.list-group-item-action{
+  color: black;
+}
+
 /* //footer */
 
 .footer{
@@ -85,4 +102,17 @@
   align-items: center;
   justify-content: center;
   
+}
+.cart-info{
+  display: flex;
+  flex-wrap: wrap;
+}
+.custom-image {
+  width: 100%; 
+  height: 160px; 
+}
+
+.custom-image-cart{
+  width: 50%;
+  height: 100px;
 }

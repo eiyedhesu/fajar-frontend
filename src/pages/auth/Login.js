@@ -15,35 +15,28 @@ const Login= () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log({ email, password}); 
       const res = await axios.post(`http://localhost:8000/auth/login`, {
         email,
         password,
-      })
-      .then ((res)=>{
-        if (res.status === 200) {
-          
-          setAuth({
-            ...auth,
-            user: res.data.user,
-            token: res.data.token,
-          })
-          localStorage.setItem('auth', JSON.stringify(res.data))
-          navigate("/")
-        }
-        console.log(res);
-        console.log("res");
-      },(error)=> {
-       
-        console.log(error);
-        console.log("error");
-      })
-     
-    } catch (error) {
-      console.log(error)
+      });
       
+      if (res.status === 200) {
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem('auth', JSON.stringify(res.data));
+        navigate('/');
+      } else {
+        console.error('Unexpected response status:', res.status);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
     }
-  }
+  };
+  
+
   
   return (
     <Layout>

@@ -1,39 +1,31 @@
 import React from 'react'
 import Layout from '../../../components/Layout'
-import {ListGroup, Tab, Row, Col} from 'react-bootstrap'
+import { Tab, Row, Col, Card} from 'react-bootstrap'
 import { useAuth } from '../../../context/auth'
-import ProfileUser from './ProfileUser'
-import Order from './Order'
-import Address from './Address'
+import UserMenu from '../../../components/UserMenu'
+
 
 
 const DashboardUser = () => {
  const [auth]= useAuth()
   return (
     <Layout>
-      <div className='dashboard'>
+      <div className='container-fluid m-3 p-3'>
       <Tab.Container id="list-group-tabs" defaultActiveKey="#link1">
         <h1> Welcome {auth?.user?.full_name} </h1>
       <Row>
         <Col sm={3}>
-          <ListGroup>
-            <ListGroup.Item className='list-group-item' action variant='secondary' href="#link1">
-              Profile
-            </ListGroup.Item>
-            <ListGroup.Item className='list-group-item' action variant='secondary' href="#link2">
-              Pemesanan
-            </ListGroup.Item>
-            <ListGroup.Item className='list-group-item' action variant='secondary' href="#link3">
-              Alamat Pengiriman
-            </ListGroup.Item>
-          </ListGroup>
+         <UserMenu/>
         </Col>
         <Col sm={9}>
-          <Tab.Content>
-            <Tab.Pane className='tab-pane' eventKey="#link1"> <ProfileUser/> </Tab.Pane>
-            <Tab.Pane className='tab-pane' eventKey="#link2"> <Order/> </Tab.Pane>
-            <Tab.Pane className='tab-pane' eventKey="#link3"> <Address/> </Tab.Pane>
-          </Tab.Content>
+          <Card>
+            <Card.Header><h1>Profile</h1></Card.Header>
+            <Card.Body>
+              <Card.Text>Nama : {auth?.user?.full_name} </Card.Text>
+              <Card.Text>Email : {auth?.user?.email} </Card.Text>
+              <Card.Text>Role : {auth?.user?.role} </Card.Text>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Tab.Container>

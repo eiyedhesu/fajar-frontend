@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Form, Button, Card, Container } from 'react-bootstrap';
+import { Form, Button, Card, Tab,Row,Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useAuth } from '../../../context/auth';
+import Layout from '../../../components/Layout';
+import AdminMenu from '../../../components/AdminMenu';
 
 
-const NewTag = () => {
+const CreateTag = () => {
   const [formData, setFormData] = useState({
     name: '',
   });
@@ -32,15 +34,23 @@ const NewTag = () => {
         }
       );
 
-      console.log('Category saved successfully:', response.data);
+      console.log('Tags saved successfully:', response.data);
     } catch (error) {
-      console.error('Error saving Category:', error);
+      console.error('Error saving Tags', error);
     }
   };
 
   return (
-    <Container>
-    <Card>
+    <Layout>
+    <div className='container-fluid m-3 p-3'>
+    <Tab.Container id="list-group-tabs" defaultActiveKey="#link1">
+      <h1> Welcome {auth?.user?.full_name} </h1>
+    <Row>
+      <Col sm={3}>
+        <AdminMenu />
+      </Col>
+      <Col sm={9}>
+      <Card>
       <Card.Header as="h1">Tambah Tags</Card.Header>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
@@ -59,8 +69,14 @@ const NewTag = () => {
         </Form>
       </Card.Body>
     </Card>
-</Container>
+      </Col>
+    </Row>
+  </Tab.Container>
+  </div>
+  </Layout>
+    
+
   );
 };
 
-export default NewTag;
+export default CreateTag;

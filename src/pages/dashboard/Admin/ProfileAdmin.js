@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Container, ListGroup } from 'react-bootstrap'
-import CardHeader from 'react-bootstrap/esm/CardHeader';
+import { ListGroup } from 'react-bootstrap'
+
 
 const ProfileAdmin = () => {
   const [userData, setUserData] = useState({
@@ -27,17 +27,15 @@ const ProfileAdmin = () => {
   }, []);
     
   return (
-    <Container>
-      <Card>
-        <CardHeader><h1>Profile</h1></CardHeader>
+   
       <ListGroup>
         <ListGroup.Item>Nama : {userData.full_name} </ListGroup.Item>
         <ListGroup.Item>Email : {userData.email} </ListGroup.Item>
         <ListGroup.Item>Role : {userData.role} </ListGroup.Item>
       </ListGroup>
-      </Card>
+     
       
-    </Container>
+    
   )
 }
 

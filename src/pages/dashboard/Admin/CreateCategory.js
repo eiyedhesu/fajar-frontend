@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Form, Button, Card, Container } from 'react-bootstrap';
+import { Form, Button, Card, Col,Row,Tab } from 'react-bootstrap';
 import axios from 'axios';
 import { useAuth } from '../../../context/auth';
+import AdminMenu from '../../../components/AdminMenu';
+import Layout from '../../../components/Layout';
 
 
-const NewCategory = () => {
+const CreateCategory = () => {
   const [formData, setFormData] = useState({
     name: '',
   });
@@ -39,7 +41,15 @@ const NewCategory = () => {
   };
 
   return (
-    <Container>
+    <Layout>
+      <div className='container-fluid m-3 p-3'>
+      <Tab.Container id="list-group-tabs" defaultActiveKey="#link1">
+        <h1> Welcome {auth?.user?.full_name} </h1>
+      <Row>
+        <Col sm={3}>
+          <AdminMenu />
+        </Col>
+        <Col sm={9}>
         <Card>
           <Card.Header as="h1">Tambah Kategori</Card.Header>
           <Card.Body>
@@ -59,8 +69,15 @@ const NewCategory = () => {
             </Form>
           </Card.Body>
         </Card>
-    </Container>
+        </Col>
+      </Row>
+    </Tab.Container>
+    </div>
+    </Layout>
+      
+        
+    
   );
 };
 
-export default NewCategory;
+export default CreateCategory;

@@ -6,6 +6,8 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     user: null,
     token: "",
+    role: ""
+    
   });
 
 
@@ -14,15 +16,20 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const data = localStorage.getItem("auth");
     if (data) {
-      const parseData = JSON.parse(data);
-      setAuth({
-        ...auth,
-        user: parseData.user,
-        token: parseData.token,
-      });
+      try {
+        const parseData = JSON.parse(data);
+        setAuth((prevAuth) => ({
+          ...prevAuth,
+          user: parseData.user,
+          token: parseData.token,
+          role: parseData.role,
+        }));
+      } catch (error) {
+        console.error("Error parsing auth data:", error);
+      }
     }
-    
   }, []);
+  
   return (
     <AuthContext.Provider value={[auth, setAuth]}>
       {children}
