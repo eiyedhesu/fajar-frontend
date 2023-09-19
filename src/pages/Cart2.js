@@ -3,82 +3,50 @@ import axios from 'axios';
 import { Container, Table, Button } from 'react-bootstrap';
 import Layout from '../components/Layout';
 import { useAuth } from '../context/auth'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const Cart2 = () => {
-const [auth, setAuth] = useAuth()  
-// const [userData, setUserData] = useState({
-//     token:''
-//   }) 
-const isLoggedIn = auth?.token && auth?.user?.full_name
-const [cartItems, setCartItems] = useState([]);
-const [totalPrice, setTotalPrice] = useState(0);
-const photoUrl = 'http://localhost:8000/api/products-photo';
-const navigate = useNavigate()
+  const [auth] = useAuth()
+
+  const isLoggedIn = auth?.token && auth?.user?.full_name
+  const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const photoUrl = 'http://localhost:8000/api/products-photo';
 
 
+  const getItems = async () => {
 
-
-useEffect(() => {
-  const storedData = localStorage.getItem('auth');
-  if (storedData) {
     try {
-      const parsedData = JSON.parse(storedData);
-      console.log(parsedData);
-      console.log('parsedData');
-      setAuth(parsedData)
-      console.log(auth);
-      console.log('setAuth(parsedData)');
-      
+      const response = await axios.get('http://localhost:8000/api/carts');
+      setCartItems(response.data);
+      calculateTotalPrice(response.data);
     } catch (error) {
-      console.error('error', error);
+      console.error(error);
     }
-  }
-}, []);
+  };
 
-const getItems = async () => {
+  useEffect(() => {
+    getItems();
+  }, [auth.token]);
 
-  try {
-    const response = await axios.get('http://localhost:8000/api/carts');
-    setCartItems(response.data);
-    calculateTotalPrice(response.data);
-    console.log(response.data)
-    console.log('response.data');
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-useEffect(() => {
-  console.log('saatnya get');
-  getItems();
-}, []);
-
-const calculateTotalPrice = (items) => {
+  const calculateTotalPrice = (items) => {
     let total = 0;
-  
+
     if (Array.isArray(items)) {
       items.forEach((item) => {
         total += item.price * item.qty;
       });
     }
-  
+
     setTotalPrice(total);
   };
-  
- 
+
+
   const updateCart = async (updatedItems) => {
-    console.log(updatedItems);
-    console.log('updatedItems');
     try {
       const response = await axios.put('http://localhost:8000/api/carts', {
         items: updatedItems,
       });
-      // cartItems.filter
-      // setCartItems(response.data);
-      // calculateTotalPrice(response.data);
-      getItems()
-      console.log(response.data);
-      console.log('response.data');
+      getItems(response.data)
     } catch (error) {
       console.error('Error updating cart:', error);
     }
@@ -92,11 +60,11 @@ const calculateTotalPrice = (items) => {
 
   const updateQuantity = (item, newQuantity) => {
     const parsedQuantity = parseInt(newQuantity);
-  
+
     if (!isNaN(parsedQuantity) && parsedQuantity > 0) {
       console.log('Updating quantity for item:', item);
       console.log('New quantity:', parsedQuantity);
-  
+
       const updatedCartItems = cartItems.map((cartItem) => {
         if (cartItem._id === item._id) {
           return { ...cartItem, qty: parsedQuantity };
@@ -104,11 +72,11 @@ const calculateTotalPrice = (items) => {
         return cartItem;
       });
       console.log('Updated cart items:', updatedCartItems);
-        updateCart(updatedCartItems); 
-      }
-    }      
+      updateCart(updatedCartItems);
+    }
+  }
 
-   
+
   return (
     <Layout >
       <Container>
@@ -129,7 +97,7 @@ const calculateTotalPrice = (items) => {
                 </tr>
               </thead>
               <tbody>
-              {Array.isArray(cartItems) && cartItems.length > 0 && cartItems.map((item) => (
+                {Array.isArray(cartItems) && cartItems.length > 0 && cartItems.map((item) => (
                   <tr key={item._id}>
                     <td>
                       <img
@@ -161,14 +129,14 @@ const calculateTotalPrice = (items) => {
             </Table>
             <p>Total Price: Rp. {totalPrice}</p>
             <Link
-                     to={{
-                      pathname: '/konfirmasi',
-                       
-                        }}
-                    >
-                <Button variant="dark" className="ms-1">
-                  Order
-                </Button>
+              to={{
+                pathname: '/konfirmasi',
+
+              }}
+            >
+              <Button variant="dark" className="ms-1">
+                Order
+              </Button>
             </Link>
           </>
         )}

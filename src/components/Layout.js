@@ -3,14 +3,14 @@ import Header from './Header'
 // import { Outlet } from 'react-router-dom'
 import Footer from './Footer'
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   return (
     <>
-        <Header/>
-        <main style={{minHeight:"80vh"}}>
-          {children}
-        </main>
-        <Footer/>
+      <Header />
+      <main style={{ minHeight: "80vh" }}>
+        {children}
+      </main>
+      <Footer />
     </>
   )
 }

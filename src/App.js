@@ -28,22 +28,22 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/search" element={<Search/>} />
+        <Route path="/search" element={<Search />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/cart2" element={<Cart2/>} />
-        <Route path="/konfirmasi" element={<Konfirmasi/>} />
-        <Route path="/invoice" element={<Invoice />} />
-        <Route path="/admin-dashboard" element={<DashboardAdmin/>} />
-        <Route path="/admin-dashboard-create-category" element={<CreateCategory/>} />
-        <Route path="/admin-dashboard-create-product" element={<CreateProduct/>} />
-        <Route path="/admin-dashboard-create-tags" element={<CreateTag/>} />
-        <Route path="/user-dashboard-order" element={<Order/>} />
-        <Route path="/user-dashboard-address" element={<Address/>} />
-        <Route path="/user-dashboard-list-address" element={<AlamatPengiriman/>} />
-        <Route path="/user-dashboard" element={<DashboardUser/>} />
+        <Route path="/cart2" element={<Cart2 />} />
+        <Route path="/konfirmasi" element={<Konfirmasi />} />
+        <Route path="/invoice/:order_id" element={<Invoice />} />
+        <Route path="/admin-dashboard" element={<DashboardAdmin />} />
+        <Route path="/admin-dashboard-create-category" element={<CreateCategory />} />
+        <Route path="/admin-dashboard-create-product" element={<CreateProduct />} />
+        <Route path="/admin-dashboard-create-tags" element={<CreateTag />} />
+        <Route path="/user-dashboard-order" element={<Order />} />
+        <Route path="/user-dashboard-address" element={<Address />} />
+        <Route path="/user-dashboard-list-address" element={<AlamatPengiriman />} />
+        <Route path="/user-dashboard" element={<DashboardUser />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import axios from 'axios'; 
+import axios from 'axios';
 
 function AddressForm() {
   const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ function AddressForm() {
         console.log(response);
         alert('Alamat telah disimpan!');
         setFormData({
-          nama:'',
+          nama: '',
           provinsi: '',
           kabupaten: '',
           kecamatan: '',
@@ -31,7 +31,7 @@ function AddressForm() {
       } else {
         console.log(response.data);
         alert('Gagal menyimpan alamat.');
-        
+
       }
     } catch (error) {
       console.error('Terjadi kesalahan:', error);
@@ -42,7 +42,7 @@ function AddressForm() {
     <div>
       <h1>Form Alamat Pengiriman</h1>
       <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="nama">
+        <Form.Group controlId="nama">
           <Form.Label>Nama Alamat:</Form.Label>
           <Form.Control
             type="text"

@@ -2,16 +2,17 @@ import { useState } from 'react'
 import React from 'react'
 import Layout from '../../components/Layout'
 import axios from 'axios'
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/auth';
-const Login= () => {
+import { Container, Form, Button } from 'react-bootstrap';
+const Login = () => {
 
-  const [email, setemail] = useState("")
-  const [password, setpassword] = useState("")
-  const [auth, setAuth] = useAuth ()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [auth, setAuth] = useAuth()
 
   const navigate = useNavigate()
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -19,7 +20,7 @@ const Login= () => {
         email,
         password,
       });
-      
+
       if (res.status === 200) {
         setAuth({
           ...auth,
@@ -35,30 +36,42 @@ const Login= () => {
       console.error('Error during login:', error);
     }
   };
-  
 
-  
+
+
   return (
     <Layout>
-     <div className='login'>
-     <h1>Login Page</h1>
-     <form onSubmit={handleSubmit}>
-  <div className="mb-3">
-    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-    <input type="email" value={email} onChange={(e) => setemail(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required />
-    <div id="emailHelp"  className="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div className="mb-3">
-    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-    <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} className="form-control" id="exampleInputPassword1" required/>
-  </div>
-  
+      <Container className="login">
+        <h1>Login Page</h1>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="exampleInputEmail1">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
 
-  <button type="submit" className="btn btn-primary">Submit</button>
-</form>
-    
-     </div>
+          <Form.Group className="mb-3" controlId="exampleInputPassword1">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </Form.Group>
 
+          <Button type="submit" variant="primary">
+            Submit
+          </Button>
+        </Form>
+      </Container>
     </Layout>
   )
 }

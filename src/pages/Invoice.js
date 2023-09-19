@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Table } from 'react-bootstrap';
+import { Card, Table, Container } from 'react-bootstrap';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -22,18 +22,14 @@ function Invoice() {
     payment_status: '',
   });
 
-  console.log(invoice);
-  console.log('invoice');
   useEffect(() => {
     const storedData = localStorage.getItem('auth');
     if (storedData) {
       try {
         const parsedData = JSON.parse(storedData);
-        console.log(parsedData);
-        console.log('parsedData');
         setAuth(parsedData);
       } catch (error) {
-        console.error('error', error);
+        console.error('Error parsing auth data:', error);
       }
     }
   }, []);
@@ -42,10 +38,9 @@ function Invoice() {
     try {
       const response = await axios.get(`http://localhost:8000/api/invoices/${order_id}`, {
         headers: {
-          'Authorization': `Bearer ${auth.token}`,
+          Authorization: `Bearer ${auth.token}`,
         },
       });
-      console.log(response);
       setInvoice(response.data);
     } catch (error) {
       console.log(error);
@@ -54,18 +49,12 @@ function Invoice() {
 
   useEffect(() => {
     getInvoice();
-  }, [order_id]);
-
-  return (
-   // ... (previous imports and code)
-
-function Invoice() {
-  // ... (previous code)
+  }, [order_id, auth.token]);
 
   return (
     <Layout>
-      <div className="invoice-container">
-        <Card>
+      <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '66vh' }}>
+        <Card style={{ width: '80%' }}>
           <Card.Header>
             <h3>Invoice</h3>
           </Card.Header>
@@ -74,30 +63,30 @@ function Invoice() {
               <Table bordered>
                 <tbody>
                   <tr>
-                    <td>Sub Total</td>
-                    <td>{invoice.sub_total}</td>
+                    <td>Sub Total :</td>
+                    <td>Rp. {invoice.sub_total}</td>
                   </tr>
                   <tr>
-                    <td>Delivery Fee</td>
-                    <td>{invoice.delivery_fee}</td>
+                    <td>Delivery Fee :</td>
+                    <td>Rp. {invoice.delivery_fee}</td>
                   </tr>
                   <tr>
-                    <td>Delivery Address</td>
+                    <td>Delivery Address :</td>
                     <td>
-                      <p>Provinsi: {invoice.delivery_address.provinsi}</p>
-                      <p>Kabupaten: {invoice.delivery_address.kabupaten}</p>
-                      <p>Kecamatan: {invoice.delivery_address.kecamatan}</p>
-                      <p>Kelurahan: {invoice.delivery_address.kelurahan}</p>
-                      <p>Detail: {invoice.delivery_address.detail}</p>
+                      <p>Provinsi: {invoice?.delivery_address?.provinsi}</p>
+                      <p>Kabupaten: {invoice?.delivery_address?.kabupaten}</p>
+                      <p>Kecamatan: {invoice?.delivery_address?.kecamatan}</p>
+                      <p>Kelurahan: {invoice?.delivery_address?.kelurahan}</p>
+                      <p>Detail: {invoice?.delivery_address?.detail}</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>Total</td>
-                    <td>{invoice.total}</td>
+                    <td>Total :</td>
+                    <td>Rp. {invoice.total}</td>
                   </tr>
                   <tr>
-                    <td>Payment Status</td>
-                    <td>{invoice.payment_status}</td>
+                    <td>Payment Status :</td>
+                    <td>Rp. {invoice.payment_status}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -105,7 +94,6 @@ function Invoice() {
               <p>Loading invoice...</p>
             )}
 
-            {/* Display order items */}
             {invoice && invoice.order_items ? (
               <Table bordered>
                 <thead>
@@ -128,11 +116,9 @@ function Invoice() {
             ) : null}
           </Card.Body>
         </Card>
-      </div>
+      </Container>
     </Layout>
   );
-}
-  )
 }
 
 export default Invoice;

@@ -46,7 +46,7 @@ const AlamatPengiriman = () => {
 
   useEffect(() => {
     getAddress();
-  }, []);
+  }, [auth.token]);
 
   return (
     <Layout>

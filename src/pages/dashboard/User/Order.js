@@ -7,9 +7,9 @@ import axios from 'axios';
 
 const Order = () => {
   const [auth] = useAuth();
-  const [orders, setOrders] = useState([]);
+  const [order, setOrder] = useState([]);
 
-  const getOrders = async () => {
+  const getOrder = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/orders', {
         headers: {
@@ -17,15 +17,15 @@ const Order = () => {
         },
       });
       console.log(response);
-      setOrders(response.data.data);
+      setOrder(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getOrders();
-  }, []);
+    getOrder();
+  }, [auth.token]);
 
   function calculateGrandTotal(orderItems, deliveryFee) {
     const itemTotal = orderItems.reduce((total, item) => {
@@ -46,7 +46,7 @@ const Order = () => {
               <UserMenu />
             </Col>
             <Col sm={9}>
-              {orders.map((order) => (
+              {order.map((order) => (
                 <Card key={order._id} className="mb-3">
                   <Card.Body>
                     <Card.Title>Your Order Details</Card.Title>

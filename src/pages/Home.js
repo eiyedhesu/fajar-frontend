@@ -14,8 +14,8 @@ function Home() {
   const [tags, setTags] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8; 
-  
+  const itemsPerPage = 10;
+
   const getProducts = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/products');
@@ -75,11 +75,11 @@ function Home() {
 
   useEffect(() => {
     if (!checked.length || !radio.length) getProducts();
-  },[checked.length, radio.length]);
+  }, [checked.length, radio.length]);
 
   useEffect(() => {
     if (checked.length || radio.length) filterProduct();
-  },[checked, radio]);
+  }, [checked, radio]);
 
   const filterProduct = async () => {
     try {
@@ -98,25 +98,25 @@ function Home() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-  
+
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   const handleAddToCart = (productId) => {
-    axios.post('http://localhost:8000/api/carts', { product: productId, qty: 1 }) 
+    axios.post('http://localhost:8000/api/carts', { product: productId, qty: 1 })
       .then((response) => {
-        
+
         console.log('Item added to cart:', response.data);
       })
       .catch((error) => {
-       console.log(error);
+        console.log(error);
         console.error(error);
       });
   };
 
-  
+
 
   return (
     <Layout>
@@ -156,34 +156,34 @@ function Home() {
             </div>
           </Col>
           <Col md={10}>
-          <h1 className="text-center">Products</h1>
+            <h1 className="text-center">Products</h1>
             <Row className="d-flex flex-wrap">
-            {currentItems.map((product) => (
-              <Col key={product._id} className="mb-3" xs={12} sm={6} md={4} lg={3}>
-                <Card style={{ width: '15rem' }}>
-                <Card.Img
-                  variant="top"
-                  src={`http://localhost:8000/api/products-photo/${product._id}`}
-                  className="custom-image"
-                  alt={product.name}
-                 />
-                <Card.Body>
-                <Card.Title>{product.name}</Card.Title>
-                <Card.Text>{product.description.substring(0, 30)}...</Card.Text>
-                <Card.Text>Rp.{product.price}</Card.Text>
-                <Button variant='dark' onClick={() => handleAddToCart(product._id)}>ADD TO CART </Button>
+              {currentItems.map((product) => (
+                <Col key={product._id} className="mb-3" xs={12} sm={6} md={4} lg={3}>
+                  <Card style={{ width: '15rem' }}>
+                    <Card.Img
+                      variant="top"
+                      src={`http://localhost:8000/api/products-photo/${product._id}`}
+                      className="custom-image"
+                      alt={product.name}
+                    />
+                    <Card.Body>
+                      <Card.Title>{product.name}</Card.Title>
+                      <Card.Text>{product.description.substring(0, 30)}...</Card.Text>
+                      <Card.Text>Rp.{product.price}</Card.Text>
+                      <Button variant='dark' onClick={() => handleAddToCart(product._id)}>ADD TO CART </Button>
 
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-      <div className="text-center">
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+            <div className="text-center">
               <ul className="pagination">
                 {Array.from({
                   length: Math.ceil(
                     (filteredProducts?.length > 0 ? filteredProducts.length : Products.length) /
-                      itemsPerPage
+                    itemsPerPage
                   ),
                 }).map((_, index) => (
                   <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>

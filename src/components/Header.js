@@ -1,22 +1,22 @@
 import React from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { BsShop,BsCart } from 'react-icons/bs';
+import { BsShop, BsCart } from 'react-icons/bs';
 import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
 import '../index.css';
 import SearchBar from './SearchBar'
-import {Badge} from 'antd'
+import { Badge } from 'antd'
 import { useAuth } from '../context/auth';
 
 
 
 const Header = () => {
-  
+
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate()
   const isAdmin = auth.user?.role === 'admin'
   // const [qty, setQty] = useState()
 
-  
+
   const handleLogout = () => {
     setAuth({
       ...auth,
@@ -26,10 +26,10 @@ const Header = () => {
     });
     localStorage.removeItem("auth");
     navigate("/login")
-  
+
   };
-  
-  
+
+
 
   return (
     <Navbar bg="dark" data-bs-theme="dark" expand="lg">
@@ -46,7 +46,7 @@ const Header = () => {
             <Nav.Link as={NavLink} to="/" className="text-light">
               Home
             </Nav.Link>
-            {!auth.user? (
+            {!auth.user ? (
               <>
                 <Nav.Link as={NavLink} to="/login" className="text-light">
                   Login
@@ -67,11 +67,11 @@ const Header = () => {
                 </NavDropdown>
               </>
             )}
-                <Nav.Link as={NavLink} to="/cart2" className="text-light">
-                <Badge count={1}>
+            <Nav.Link as={NavLink} to="/cart2" className="text-light">
+              <Badge count={1}>
                 <BsCart className="icon-cart" />
-                </Badge>
-                </Nav.Link>
+              </Badge>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
