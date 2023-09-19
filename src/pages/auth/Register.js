@@ -44,33 +44,33 @@ const Register = () => {
       <Container className="register">
         <h1>Register Page</h1>
         <Form onSubmit={handleSubmit}>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="inputText">
+          <Row >
+            <Form.Group className="mb-3" controlId="inputText">
               <Form.Label>Nama Lengkap</Form.Label>
               <Form.Control type="text" value={full_name} onChange={(e) => setFull_Name(e.target.value)} required />
             </Form.Group>
           </Row>
 
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="exampleInputEmail1">
+          <Row >
+            <Form.Group className="mb-3" controlId="exampleInputEmail1">
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
               <Form.Text>We'll never share your email with anyone else.</Form.Text>
             </Form.Group>
           </Row>
 
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="exampleInputPassword1">
+          <Row>
+            <Form.Group className="mb-3" controlId="exampleInputPassword1">
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </Form.Group>
           </Row>
 
-          <Row className="mb-3">
-            <Form.Label as="legend" column sm={2}>
+          <Row>
+            <Form.Label className="mb-3" column sm={6}>
               Daftar Sebagai
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={6}>
               <Form.Check
                 type="radio"
                 label="User"
