@@ -4,6 +4,7 @@ import { Button, Container, Form, Card, Table } from 'react-bootstrap'
 import { useAuth } from '../context/auth'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useCart } from '../context/cartContext'
 
 
 const Konfirmasi = () => {
@@ -16,7 +17,7 @@ const Konfirmasi = () => {
   const [cartItems, setCartItems] = useState([]);
   const [order, setOrder] = useState()
   const navigate = useNavigate()
-  const photoUrl = 'http://localhost:8000/api/products-photo';
+  const [cart, setCart] = useCart()
   useEffect(() => {
     const storedData = localStorage.getItem('auth');
     if (storedData) {
@@ -112,10 +113,12 @@ const Konfirmasi = () => {
         deliveryFee,
         delivery_adress
       });
-
       const order_id = response.data.order_id;
+      localStorage.removeItem('cart');
       setOrder(response)
+      setCart([]);
       navigate(`/invoice/${order_id}`);
+
     } catch (error) {
       console.log(error);
     }

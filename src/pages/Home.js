@@ -3,11 +3,13 @@ import { Checkbox } from 'antd';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import Layout from '../components/Layout';
 import axios from 'axios';
+import { useCart } from '../context/cartContext';
 
 
 
 function Home() {
   const [Products, setProducts] = useState([]);
+  const [cart, setCart] = useCart()
   const [category, setCategory] = useState([]);
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
@@ -104,18 +106,18 @@ function Home() {
     setCurrentPage(pageNumber);
   };
 
-  const handleAddToCart = (productId) => {
+  const addToCart = (productId) => {
+    const updatedCart = [...cart, productId];
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
     axios.post('http://localhost:8000/api/carts', { product: productId, qty: 1 })
       .then((response) => {
-
         console.log('Item added to cart:', response.data);
       })
       .catch((error) => {
-        console.log(error);
-        console.error(error);
+        console.error('Error adding item to cart:', error);
       });
   };
-
 
 
   return (
@@ -171,7 +173,7 @@ function Home() {
                       <Card.Title>{product.name}</Card.Title>
                       <Card.Text>{product.description.substring(0, 30)}...</Card.Text>
                       <Card.Text>Rp.{product.price}</Card.Text>
-                      <Button variant='dark' onClick={() => handleAddToCart(product._id)}>ADD TO CART </Button>
+                      <Button variant='dark' onClick={() => addToCart(product._id)}>ADD TO CART </Button>
 
                     </Card.Body>
                   </Card>

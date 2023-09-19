@@ -4,9 +4,10 @@ import { Container, Table, Button } from 'react-bootstrap';
 import Layout from '../components/Layout';
 import { useAuth } from '../context/auth'
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/cartContext';
 const Cart2 = () => {
   const [auth] = useAuth()
-
+  const [cart, setCart] = useCart()
   const isLoggedIn = auth?.token && auth?.user?.full_name
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -17,6 +18,7 @@ const Cart2 = () => {
 
     try {
       const response = await axios.get('http://localhost:8000/api/carts');
+      console.log(response);
       setCartItems(response.data);
       calculateTotalPrice(response.data);
     } catch (error) {
@@ -46,6 +48,7 @@ const Cart2 = () => {
       const response = await axios.put('http://localhost:8000/api/carts', {
         items: updatedItems,
       });
+      console.log(response);
       getItems(response.data)
     } catch (error) {
       console.error('Error updating cart:', error);
@@ -53,9 +56,12 @@ const Cart2 = () => {
   };
 
   const removeFromCart = (item) => {
+    const myCart = [...cart]
     const updatedCartItems = cartItems.filter((cartItem) => cartItem._id !== item._id);
+    const index = cartItems.findIndex((cartItem) => cartItem._id !== item._id);
+    myCart.splice(index, 1)
+    setCart(myCart)
     updateCart(updatedCartItems);
-    console.log(cartItems);
   };
 
   const updateQuantity = (item, newQuantity) => {
@@ -130,8 +136,7 @@ const Cart2 = () => {
             <p>Total Price: Rp. {totalPrice}</p>
             <Link
               to={{
-                pathname: '/konfirmasi',
-
+                pathname: '/konfirmasi'
               }}
             >
               <Button variant="dark" className="ms-1">

@@ -6,15 +6,15 @@ import '../index.css';
 import SearchBar from './SearchBar'
 import { Badge } from 'antd'
 import { useAuth } from '../context/auth';
+import { useCart } from '../context/cartContext';
 
 
 
 const Header = () => {
-
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate()
   const isAdmin = auth.user?.role === 'admin'
-  // const [qty, setQty] = useState()
+  const [cart] = useCart()
 
 
   const handleLogout = () => {
@@ -26,7 +26,6 @@ const Header = () => {
     });
     localStorage.removeItem("auth");
     navigate("/login")
-
   };
 
 
@@ -68,7 +67,7 @@ const Header = () => {
               </>
             )}
             <Nav.Link as={NavLink} to="/cart2" className="text-light">
-              <Badge count={1}>
+              <Badge count={cart?.length}>
                 <BsCart className="icon-cart" />
               </Badge>
             </Nav.Link>

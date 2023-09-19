@@ -4,14 +4,19 @@ const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  useEffect(()=> {
+  useEffect(() => {
     let existingCartItem = localStorage.getItem('cart')
-    if(existingCartItem) setCart(JSON.parse(existingCartItem))
-  },[])
+    if (existingCartItem) setCart(JSON.parse(existingCartItem))
+  }, [])
+
+  const updateCart = (newCart) => {
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
+  }
 
 
   return (
-    <CartContext.Provider value={[cart, setCart]}>
+    <CartContext.Provider value={[cart, updateCart]}>
       {children}
     </CartContext.Provider>
   );
