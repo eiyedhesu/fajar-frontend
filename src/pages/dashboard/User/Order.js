@@ -13,10 +13,9 @@ const Order = () => {
     try {
       const response = await axios.get('http://localhost:8000/api/orders', {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          'Authorization': `Bearer ${auth.token}`,
         },
       });
-      console.log(response);
       setOrder(response.data.data);
     } catch (error) {
       console.log(error);
@@ -24,7 +23,7 @@ const Order = () => {
   };
 
   useEffect(() => {
-    getOrder();
+    getOrder([auth.token]);
   }, [auth.token]);
 
   function calculateGrandTotal(orderItems, deliveryFee) {
@@ -32,7 +31,7 @@ const Order = () => {
       const itemTotal = item.price * item.qty;
       return total + itemTotal;
     }, 0);
-  
+
     return itemTotal + deliveryFee;
   }
 
@@ -46,7 +45,7 @@ const Order = () => {
               <UserMenu />
             </Col>
             <Col sm={9}>
-              {order.map((order) => (
+              {order?.map((order) => (
                 <Card key={order._id} className="mb-3">
                   <Card.Body>
                     <Card.Title>Your Order Details</Card.Title>
@@ -86,16 +85,16 @@ const Order = () => {
                                 <li>Detail : {order.delivery_address.detail}</li>
                               </ul>
                               <p>Delivery Fee: Rp. {order.delivery_fee}</p>
-                              
+
                             </div>
                           </td>
                           <td>
                             <div>
-                              <br/>
-                                <h5>Total : Rp. {calculateGrandTotal(order.order_items, order.delivery_fee)}</h5> 
-                                <br/>
-                               <h5>Status : {order.status}</h5> 
-                              
+                              <br />
+                              <h5>Total : Rp. {calculateGrandTotal(order.order_items, order.delivery_fee)}</h5>
+                              <br />
+                              <h5>Status : {order.status}</h5>
+
                             </div>
                           </td>
                         </tr>
