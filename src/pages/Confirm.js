@@ -42,7 +42,6 @@ const Konfirmasi = () => {
       });
       console.log(response);
       if (response.status === 200) {
-
         setShippingAddress(response.data.data);
       } else {
         console.error('Error fetching address:', response.data.message);
@@ -62,12 +61,8 @@ const Konfirmasi = () => {
         }
       });
       setCartItems(response.data);
-
       getSubtotalPrice(response.data)
-
       getTotalPrice(response.data);
-      console.log(response.data)
-      console.log('response.data');
     } catch (error) {
       console.error(error);
     }

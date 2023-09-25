@@ -7,6 +7,8 @@ import SearchBar from './SearchBar'
 import { Badge } from 'antd'
 import { useAuth } from '../context/auth';
 import { useCart } from '../context/cartContext';
+import axios from 'axios';
+
 
 
 
@@ -16,17 +18,28 @@ const Header = () => {
   const isAdmin = auth.user?.role === 'admin'
   const [cart] = useCart()
 
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/auth/logout');
 
-  const handleLogout = () => {
-    setAuth({
-      ...auth,
-      user: null,
-      token: "",
-      role: ""
-    });
-    localStorage.removeItem("auth");
-    navigate("/login")
+      if (response.status === 200) {
+        setAuth({
+          user: null,
+          token: "",
+          role: ""
+        });
+        localStorage.removeItem("auth");
+        console.log(response);
+        alert("Logout successfully");
+        navigate("/login");
+      } else {
+        console.error('Logout failed:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
+
 
 
 

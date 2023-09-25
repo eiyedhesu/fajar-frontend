@@ -62,6 +62,7 @@ const Cart2 = () => {
     myCart.splice(index, 1)
     setCart(myCart)
     updateCart(updatedCartItems);
+    localStorage.setItem('cart', JSON.stringify(updatedCartItems))
   };
 
   const updateQuantity = (item, newQuantity) => {

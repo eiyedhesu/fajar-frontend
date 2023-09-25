@@ -112,6 +112,7 @@ function Home() {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     axios.post('http://localhost:8000/api/carts', { product: productId, qty: 1 })
       .then((response) => {
+        alert(`${response.data.name} added to cart `)
         console.log('Item added to cart:', response.data);
       })
       .catch((error) => {

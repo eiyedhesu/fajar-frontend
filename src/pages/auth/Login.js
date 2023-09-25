@@ -21,16 +21,19 @@ const Login = () => {
         password,
       });
 
-      if (res.status === 200) {
+      if (res.data.success === true) {
         setAuth({
           ...auth,
           user: res.data.user,
           token: res.data.token,
         });
         localStorage.setItem('auth', JSON.stringify(res.data));
+        console.log('Login Succesfully');
+        alert('Login Succesfully');
         navigate('/');
       } else {
-        console.error('Unexpected response status:', res.status);
+        console.log('Email or Password incorrect');
+        alert('Email or Password incorrect')
       }
     } catch (error) {
       console.error('Error during login:', error);
